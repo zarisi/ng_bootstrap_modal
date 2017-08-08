@@ -1,4 +1,5 @@
-<div class="modal" style="display: block">
+<div *ngIf="show && backdrop" class="modal-backdrop" style="background: rgba(0,0,0,0.7);"></div>
+<div [style.display]="show ? 'block' : 'none'" class="modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -6,17 +7,20 @@
                     {{header}}
                     <ng-content select="header"></ng-content>
                 </h5>
-                <button *ngIf="dismissable" type="button" class="close" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button *ngIf="dismissable" type="button" class="close" aria-label="Close" (click)="action($event)">
+                    <span aria-hidden="true" id="dimissableModal">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <ng-content></ng-content>
                 <div *ngIf="textContent != null">{{textContent}}</div>
+                <template #contentComponent></template>
+                <ng-content></ng-content>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <ng-content select="footer"></ng-content>
+                <button *ngFor="let customButton of customButtons" type="button" class="btn {{customButton.classes}}" [innerHtml]="customButton.label" [attr.id]="customButton.id" (click)="action($event)"></button>
+                <button *ngIf="acceptButton != null" type="button" class="btn {{acceptButton.classes}}" [innerHtml]="acceptButton.label" [attr.id]="acceptButton.id" (click)="action($event)"></button>
+                <button *ngIf="cancelButton != null" type="button" class="btn {{cancelButton.classes}}" [innerHtml]="cancelButton.label" [attr.id]="cancelButton.id" (click)="action($event)"></button>
             </div>
         </div>
     </div>

@@ -1,11 +1,21 @@
-<h1>My First AngularDart App</h1>
+<h1>NG_BOOTSTRAP_MODAL</h1>
 
-<todo-list></todo-list>
-<!--<modal-bs-component>
+<!-- Modal with simple text as content -->
+<button (click)="createModalSimple()" class="btn btn-primary">Show Simple Modal</button>
+<!-- Modal with a component as content -->
+<button (click)="createModalComponent()" class="btn btn-primary">Show Component Modal</button>
+
+<button (click)="createModalHtml()" class="btn btn-primary">Show Html Modal</button>
+
+<modal-bs-component #modalHtml [dismissable]>
     <header>
         Esto es el header
     </header>
     <div>
-        Esto es una prueba
+        This is a custom Html Content
+        <button disabled>disabled button</button>
     </div>
-</modal-bs-component>-->
+    <footer>
+        This is a custom footer
+    </footer>
+</modal-bs-component>
